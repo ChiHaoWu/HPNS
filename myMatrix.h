@@ -9,72 +9,52 @@
 
 using namespace std;
 
+// in myVec.cpp
 class Vector{
 public:
-   Vector() { }
-   Vector(size_t n, double x = 0) {
-      _vec.resize(n, x);
-   }
-   ~Vector() { }
+   Vector(); 
+   ~Vector();
+   // initialize a length n constant vector with value x (x is 0 by default) 
+   Vector(size_t n, double x = 0);    
+  
+   // return the ith component
+   double& operator[] (size_t i);
+   double  operator[] (size_t i) const;
+  
+   // return the inner product of two vectors 
+   double operator*  (const Vector& v) const;
+   // return the summation(subtraction) of two vectors
+   Vector operator+  (const Vector& v) const; 
+   Vector operator-  (const Vector& v) const; 
 
-   double& operator[] (size_t i) { return _vec[i]; }
-   const double& operator[] (size_t i) const { return _vec[i]; }
-   
-   double operator* (const Vector& v) {
-      double x;
-      for(size_t i = 0, n = _vec.size(); i < n; ++i)
-         x = x + _vec[i]*v[i];
-      return x;
-   }
-   Vector operator+ (const Vector& v) {
-      size_t n;   n = _vec.size();
-      Vector x(n);    
-      for(size_t i = 0; i < n; ++i)
-         x[i] = _vec[i] + v[i];
-      return x;
-   } 
-   Vector operator- (const Vector& v) {
-      size_t n;   n = _vec.size();
-      Vector x(n);    
-      for(size_t i = 0; i < n; ++i)
-         x[i] = _vec[i] - v[i];
-      return x;
-   }
+   // return the length   
+   size_t size() const; 
 
-   size_t size() const { return _vec.size(); }
 private:
    vector<double> _vec;
 };
 
+// in myMat.cpp
 class dnMatrix{
 public:
-   dnMatrix() { 
-      _val.resize(3, Vector(3));
-      for(size_t i = 0; i < 3; ++i)          
-         _val[i][i] = 1; 
-   }
-   dnMatrix(const string& name) {
-      ifstream fin;   fin.open(name);
-      if(fin.is_open()) {
-         size_t m, n;
-         string str;
-         stringstream ss;
-         ss >> m >> n; 
-      }
-   }
-   ~dnMatrix() { }
+   dnMatrix(); 
+   ~dnMatrix();
+   // initialize an n by n constant matrix with value x (x is 0 by default)
+   dnMatrix(size_t n, double x = 0);
+   dnMatrix(const string& name);   
 
-   const Vector& operator[] (size_t i) const { return _val[i]; }
+   // return the ith row 
+   Vector&       operator[] (size_t i);
+   const Vector& operator[] (size_t i) const;
 
-   void print() const {
-      for(auto it = _val.begin(); it != _val.end(); ++it) {
-         for(size_t i = 0, n = it->size(); i < n; ++i)
-            cout << (*it)[i] << ' ';
-         cout << endl;
-      } 
-   }
+   // return matrix vector multiplication
+   Vector operator* (const Vector& v) const;
+
+   // return the number of rows
+   size_t size() const;
+    
 private:
-   vector<Vector> _val;
+   vector<Vector> _mat;
 };
 
 class spMatrix {

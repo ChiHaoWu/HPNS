@@ -1,20 +1,8 @@
-#include <vector>
-#include <math.h>
+#ifndef MY_SOLVER_H
+#define MY_SOLVER_H
+
 #include "myMatrix.h"
 
-double
-norm(Vector v)
-{
-   return sqrt(v*v);
-}
+extern bool jacobi(const dnMatrix&, const Vector&);
 
-bool
-jacobi(const dnMatrix& a, Vector& b)
-{
-   size_t n = b.size();
-   Vector init(n);
-   //while(norm(a*x - b) > pow(10, -5)) {
-   // 
-   //} 
-   return true;
-}
+#endif
